@@ -15,6 +15,10 @@ const bookSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ['Fantasy', 'Mystery', 'Thriller', 'Horror', 'Romance', 'Sci-Fi', 'Magical Realism', 'Realist', 'Historical']
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 })
 
