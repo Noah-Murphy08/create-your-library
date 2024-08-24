@@ -2,6 +2,17 @@ const mongoose = require('mongoose')
 
 
 
+const commentSchema = new mongoose.Schema({
+    text: {
+        type: String,
+        required: true
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
+})
+
 const bookSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -19,7 +30,16 @@ const bookSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    like: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    dislike: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    comments: [commentSchema]
 })
 
 
