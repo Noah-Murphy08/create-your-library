@@ -12,10 +12,10 @@ const librarySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    books: {
+    books: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Books'
-    }
+    }]
 })
 
 

@@ -22,7 +22,7 @@ app.use('/test-jwt', testJWTRouter);
 app.use('/users', usersRouter);
 app.use('/profiles', profilesRouter);
 app.use('/books', booksRouter)
-// app.use('/libraries', librariesRouter)
+app.use('/libraries', librariesRouter)
 
 app.listen(3000, () => {
     console.log('The express app is ready!');
