@@ -46,17 +46,18 @@ router.post('/:bookId/like/:userId', async (req, res) => {
         const book = await Book.findById(req.params.bookId)
         if (book.like.includes(req.params.userId)) {
             await Book.findByIdAndUpdate(req.params.bookId, {
-                $pull: { like: req.params.userId}
+                $pull: { like: req.params.userId }
             })
         } else {
             await Book.findByIdAndUpdate(req.params.bookId, {
-                $push: { like: req.params.userId},
-                $pull: {dislike: req.params.userId}
+                $push: { like: req.params.userId },
+                $pull: { dislike: req.params.userId }
             })
         }
-        res.status(200).json(book)
+        const updatedBook = await Book.findById(req.params.bookId)
+        res.status(200).json(updatedBook)
     } catch (error) {
-        res.status(500).json(book)
+        res.status(500).json({ messgae: 'Error updating like' })
     }
 })
 
@@ -65,24 +66,26 @@ router.post('/:bookId/dislike/:userId', async (req, res) => {
         const book = await Book.findById(req.params.bookId)
         if (book.dislike.includes(req.params.userId)) {
             await Book.findByIdAndUpdate(req.params.bookId, {
-                $pull: { dislike: req.params.userId}
+                $pull: { dislike: req.params.userId }
             })
         } else {
             await Book.findByIdAndUpdate(req.params.bookId, {
-                $push: { dislike: req.params.userId},
-                $pull: { like: req.params.userId}
+                $push: { dislike: req.params.userId },
+                $pull: { like: req.params.userId }
             })
         }
-        res.status(200).json(book)
+        const updatedBook = await Book.findById(req.params.bookId)
+        res.status(200).json(updatedBook)
     } catch (error) {
-        res.status(500).json(book)
+        console.error('Error in like route:', error)
+        res.status(500).json({ message: 'Error updating dislike' })
     }
 })
 
 router.post('/:bookId/comments', async (req, res) => {
     try {
         req.body.owner = req.user._id
-        const book = await Book.findById(req.params.bookId)
+        const book = await Book.findById(req.params.bookId).populate(['owner', 'comments.owner'])
         book.comments.push(req.body)
         await book.save()
 
