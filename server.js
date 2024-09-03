@@ -29,6 +29,7 @@ app.use('/libraries', librariesRouter)
 
 app.set("port", process.env.PORT || 3000);
 
-app.listen(app.get("port"), () => {
-  console.log(`✅ PORT: ${app.get("port")} 🌟`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
