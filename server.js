@@ -16,7 +16,7 @@ mongoose.connection.on('connected', () => {
     console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 app.use(cors({
-    origin: ['https://librarycreation.netlify.app'],
+    origin: 'https://librarycreation.netlify.app',
     credentials: true
 }));
 app.use(express.json());
@@ -29,7 +29,6 @@ app.use('/libraries', librariesRouter)
 
 app.set("port", process.env.PORT || 3000);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+app.listen(app.get("port"), () => {
+    console.log(`✅ PORT: ${app.get("port")} 🌟`);
+  });
